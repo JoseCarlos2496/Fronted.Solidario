@@ -1,0 +1,210 @@
+<h1>Modulo de Cuentas</h1>
+
+<div class="contenedor">
+
+  <mat-tab-group #tabRef dynamicHeight (selectedTabChange)='logChange(tabRef.selectedIndex)'>
+
+    <mat-tab label="Cuentas">
+      <mat-card class="tarjeta">
+        <mat-card-content>
+
+          <h3>Cuentas</h3>
+          <button mat-raised-button color="primary" (click)="getAccounts()">Traer Cuentas</button>
+
+          <table mat-table [dataSource]="accountList" class="mat-elevation-z8">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Id">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+            <!-- # Cuenta Column -->
+            <ng-container matColumnDef="# Cuenta">
+              <th mat-header-cell *matHeaderCellDef> # Cuenta </th>
+              <td mat-cell *matCellDef="let element"> {{element.numeroCuenta}} </td>
+            </ng-container>
+            <!-- Tipo Cuenta Column -->
+            <ng-container matColumnDef="Tipo Cuenta">
+              <th mat-header-cell *matHeaderCellDef> Tipo Cuenta </th>
+              <td mat-cell *matCellDef="let element"> {{element.tipoCuenta}} </td>
+            </ng-container>
+            <!-- Saldo Inicial Column -->
+            <ng-container matColumnDef="Saldo Inicial">
+              <th mat-header-cell *matHeaderCellDef> Saldo Inicial </th>
+              <td mat-cell *matCellDef="let element"> {{element.saldoInicial}} </td>
+            </ng-container>
+            <!-- Ciente Id Id Column -->
+            <ng-container matColumnDef="Ciente Id">
+              <th mat-header-cell *matHeaderCellDef> Ciente Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.clienteId}} </td>
+            </ng-container>
+            <!-- Estado Column -->
+            <ng-container matColumnDef="Estado">
+              <th mat-header-cell *matHeaderCellDef> # Estado </th>
+              <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Cuenta por Idcliente">
+      <mat-card class="tarjeta">
+        <mat-card-content>
+
+          <h3>Movimiento por Id</h3>
+
+          <table>
+            <tr>
+              <td><mat-label>Id de la Cuenta:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="id" type="number" placeholder="Id de Cuenta"><br/></td>
+            </tr>
+            <br/>
+            <tr>
+              <td></td>
+              <td [colSpan]="2" style="align-content: center;"><button mat-raised-button color="primary" (click)="getAccountByIdCliente(id)">Buscar Cuentas</button><br/></td>
+            </tr>
+          </table>
+
+          <br/><br/>
+
+          <table mat-table [dataSource]="accountList" class="mat-elevation-z8">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Id">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+            <!-- # Cuenta Column -->
+            <ng-container matColumnDef="# Cuenta">
+              <th mat-header-cell *matHeaderCellDef> # Cuenta </th>
+              <td mat-cell *matCellDef="let element"> {{element.numeroCuenta}} </td>
+            </ng-container>
+            <!-- Tipo Cuenta Column -->
+            <ng-container matColumnDef="Tipo Cuenta">
+              <th mat-header-cell *matHeaderCellDef> Tipo Cuenta </th>
+              <td mat-cell *matCellDef="let element"> {{element.tipoCuenta}} </td>
+            </ng-container>
+            <!-- Saldo Inicial Column -->
+            <ng-container matColumnDef="Saldo Inicial">
+              <th mat-header-cell *matHeaderCellDef> Saldo Inicial </th>
+              <td mat-cell *matCellDef="let element"> {{element.saldoInicial}} </td>
+            </ng-container>
+            <!-- Ciente Id Id Column -->
+            <ng-container matColumnDef="Ciente Id">
+              <th mat-header-cell *matHeaderCellDef> Ciente Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.clienteId}} </td>
+            </ng-container>
+            <!-- Estado Column -->
+            <ng-container matColumnDef="Estado">
+              <th mat-header-cell *matHeaderCellDef> # Estado </th>
+              <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Cuenta por # Cuenta">
+      <mat-card class="tarjeta">
+        <mat-card-content>
+
+          <h3>Cuenta por # Cuenta</h3>
+
+          <table>
+            <tr>
+              <td><mat-label># de Cuenta:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="numCuenta" type="string" placeholder="Id de Cuenta"><br/></td>
+            </tr>
+            <br/>
+            <tr>
+              <td></td>
+              <td [colSpan]="2" style="align-content: center;"><button mat-raised-button color="primary" (click)="getByAccountNumber(numCuenta)">Buscar Cuenta</button><br/></td>
+            </tr>
+          </table>
+
+          <br/><br/>
+
+          <table>
+            <tr>
+              <td><mat-label># Cuenta:&nbsp;</mat-label></td>
+              <td><input matLabel [(ngModel)]="numeroCuenta" type="string" value="byIdClient.numeroCuenta" disabled="true"><br/></td>
+            </tr>
+            <tr>
+              <td><mat-label>Tipo Cuenta:&nbsp;</mat-label></td>
+              <td><input matLabel [(ngModel)]="tipoCuenta" type="string" value="byIdClient.tipoCuenta" disabled="true"><br/></td>
+            </tr>
+            <tr>
+              <td><mat-label>Saldo Inicial:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="saldoInicial" type="string" value="byIdClient.saldoInicial" disabled="true"><br/></td>
+            </tr>
+            <tr>
+              <td><mat-label>Ciente:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="clienteId" type="string" value="byIdClient.clienteId" disabled="true"><br/></td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Nueva Cuenta">
+      <mat-card class="tarjeta">
+        <mat-card-content>
+          <h3>Nuevo Movimiento</h3>
+
+          <table>
+            <tr>
+              <td><mat-label># Cuenta:&nbsp;</mat-label></td>
+              <td><input matLabel [(ngModel)]="numeroCuenta" type="string" placeholder="# de cuenta"><br/></td>
+            </tr>
+            <br/>
+            <tr>
+              <td><mat-label>Saldo Inicial:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="saldoInicial" type="number" placeholder="Saldo Inicial" min="100"><br/></td>
+            </tr>
+            <br/>
+            <tr>
+              <td><mat-label>Ciente:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="clienteId" type="string" placeholder="Id del cliente"><br/></td>
+            </tr>
+            <br/>
+            <tr>
+              <td [colSpan]="4" style="align-content: center;"><button mat-raised-button color="primary" (click)="addAccount()">Crear</button><br/></td>
+            </tr>
+          </table>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Elimina Cuenta por Id">
+      <mat-card class="tarjeta">
+        <mat-card-content>
+
+          <h3>Cuenta por Id</h3>
+
+          <table>
+            <tr>
+              <td><mat-label>Id del Cliente:&nbsp;</mat-label></td>
+              <td><input matInput [(ngModel)]="id" type="number" placeholder="Id Cliente"><br/></td>
+            </tr>
+            <br/>
+            <tr>
+              <td></td>
+              <td [colSpan]="2" style="align-content: center;"><button mat-raised-button color="primary" (click)="deleteAccount(id)">Eliminar Cuenta</button><br/></td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+
+
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
